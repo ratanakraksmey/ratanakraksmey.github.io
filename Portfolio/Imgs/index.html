@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Theng Ratanakraksmey — Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
       --bg: #0a0a0a;
@@ -14,13 +14,14 @@
       --accent: #f5f0e8;
       --accent2: #d9d0be;
       --text: #f5f0e8;
-      --muted: #f7f5f5;
+      --muted: #9a9690;
       --radius: 16px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { 
-    scroll-behavior: smooth; }
+
+    html { scroll-behavior: smooth; }
+
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
@@ -28,9 +29,11 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
+
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
     img { max-width: 100%; display: block; }
+
 
     body::before {
       content: '';
@@ -45,12 +48,14 @@
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 1000;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1.2rem 4rem;
-      background: #000000;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid #ffffff18;
       transition: padding 0.3s, box-shadow 0.3s;
     }
@@ -65,9 +70,16 @@
       font-size: 1.2rem;
       letter-spacing: -0.02em;
       color: #ffffff;
+      z-index: 1001;
+      position: relative;
     }
-    .nav-logo span { color: #ffffff; opacity: 0.4; }
-    .nav-links { display: flex; gap: 2.5rem; }
+    .nav-logo span { opacity: 0.4; }
+
+ 
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+    }
     .nav-links a {
       font-size: 0.85rem;
       font-weight: 500;
@@ -78,8 +90,62 @@
     }
     .nav-links a:hover { color: #ffffff; }
 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 1001;
+      position: relative;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #ffffff;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #000000f5;
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-drawer.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-drawer a {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 9vw, 3rem);
+      font-weight: 800;
+      color: #ffffff80;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      transition: color 0.2s;
+    }
+    .mobile-drawer a:hover { color: #ffffff; }
+
     #home {
-      min-height: 100vh;
+      min-height: 100svh;
       display: flex;
       align-items: center;
       padding: 8rem 4rem 4rem;
@@ -108,11 +174,17 @@
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.1); opacity: 0.7; }
     }
-    .hero-content { max-width: 800px; animation: fadeUp 0.8s ease both; }
+
+    .hero-content {
+      max-width: 800px;
+      width: 100%;
+      animation: fadeUp 0.8s ease both;
+    }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
     .hero-tag {
       display: inline-flex;
       align-items: center;
@@ -132,32 +204,44 @@
       content: '';
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--accent);
+      background: #7fff7f;
       animation: blink 1.5s ease infinite;
+      flex-shrink: 0;
     }
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.2; }
     }
+
     .hero-title {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(3rem, 8vw, 6rem);
+      font-size: clamp(2.2rem, 9vw, 6rem);
       font-weight: 800;
       line-height: 1.0;
       letter-spacing: -0.03em;
       margin-bottom: 1.5rem;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
-    .hero-title .line2 { color: var(--accent); }
+    .hero-title .line2 {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--accent);
+    }
+
     .hero-desc {
-      font-size: 1.1rem;
+      font-size: clamp(0.95rem, 3vw, 1.1rem);
       color: var(--muted);
       max-width: 520px;
       margin-bottom: 2.5rem;
       line-height: 1.7;
     }
-    .hero-btns { display: flex; 
-      gap: 1rem; 
-      flex-wrap: wrap; }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
     .btn-primary {
       background: var(--accent);
       color: #0d0d0d;
@@ -167,27 +251,31 @@
       padding: 0.85rem 2rem;
       border-radius: 100px;
       letter-spacing: 0.02em;
+      display: inline-block;
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 30px rgba(245,240,232,0.15);
     }
+
     .btn-outline {
       border: 1px solid var(--border);
       color: var(--text);
       font-size: 0.9rem;
       padding: 0.85rem 2rem;
       border-radius: 100px;
-      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
     }
-    .btn-outline:hover { border-color: var(--text); 
-      background: rgba(255,255,255,0.04); 
+    .btn-outline:hover {
+      border-color: var(--text);
+      background: rgba(255,255,255,0.04);
       transform: translateY(-2px);
-      
     }
 
     section { padding: 6rem 4rem; }
+
     .section-label {
       font-size: 0.75rem;
       font-weight: 600;
@@ -198,7 +286,7 @@
     }
     .section-title {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(1.8rem, 4vw, 3rem);
       font-weight: 800;
       letter-spacing: -0.02em;
       margin-bottom: 1rem;
@@ -236,11 +324,17 @@
       position: relative;
       overflow: hidden;
     }
+    .about-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
     .about-avatar::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(200,241,53,0.08), transparent);
+      background: linear-gradient(135deg, rgba(245,240,232,0.04), transparent);
+      pointer-events: none;
     }
     .about-text p {
       color: var(--muted);
@@ -262,14 +356,15 @@
       border-radius: 100px;
       transition: border-color 0.2s, color 0.2s;
     }
-    .skill-tag:hover { 
-      border-color: var(--accent); 
-      color: var(--accent); }
+    .skill-tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
 
     #projects { background: var(--bg); }
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.5rem;
     }
     .project-card {
@@ -278,11 +373,10 @@
       border-radius: var(--radius);
       overflow: hidden;
       transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-      animation: fadeUp 0.6s ease both;
     }
     .project-card:hover {
       transform: translateY(-5px);
-      border-color: rgb(249, 156, 6);
+      border-color: rgb(249,156,6);
       box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     }
     .project-thumb {
@@ -290,12 +384,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3.5rem;
-      position: relative;
+      overflow: hidden;
+    }
+    .project-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .thumb-Stock { background: linear-gradient(135deg, #1a2a4a, #0d1a30); }
-    .thumb-lib     { background: linear-gradient(135deg, #2a1a1a, #1a0d0d); }
-    .thumb-emp     { background: linear-gradient(135deg, #1a1a2a, #0d0d1a); }
+    .thumb-lib   { background: linear-gradient(135deg, #2a1a1a, #1a0d0d); }
+    .thumb-emp   { background: linear-gradient(135deg, #1a1a2a, #0d0d1a); }
     .project-body { padding: 1.5rem; }
     .project-name {
       font-family: 'Syne', sans-serif;
@@ -322,9 +420,7 @@
     }
 
     #contact { background: var(--surface); }
-    .contact-wrapper {
-      max-width: 600px;
-    }
+    .contact-wrapper { max-width: 600px; }
     .contact-links {
       display: flex;
       flex-direction: column;
@@ -341,10 +437,12 @@
       border-radius: var(--radius);
       transition: border-color 0.2s, background 0.2s;
       cursor: pointer;
+      text-decoration: none;
+      color: inherit;
     }
     .contact-item:hover {
       border-color: var(--accent);
-      background: rgba(200,241,53,0.04);
+      background: rgba(245,240,232,0.04);
     }
     .contact-icon {
       width: 42px; height: 42px;
@@ -353,6 +451,7 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 1.2rem;
       flex-shrink: 0;
+      color: var(--accent);
     }
     .contact-label { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.1rem; }
     .contact-value { font-weight: 500; font-size: 0.95rem; }
@@ -378,43 +477,82 @@
 
     @media (max-width: 900px) {
       nav { padding: 1.2rem 2rem; }
-      .nav-links { gap: 1.5rem; }
+      nav.scrolled { padding: 0.8rem 2rem; }
       section { padding: 4rem 2rem; }
       .divider { margin: 0 2rem; }
       #home { padding: 7rem 2rem 4rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .about-avatar { max-width: 260px; margin: 0 auto; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-avatar { max-width: 280px; margin: 0 auto; }
     }
-    @media (max-width: 600px) {
-  .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: #000; padding: 1rem 2rem; }
-  .nav-links.open { display: flex; }
-  .hero-title { font-size: 2.8rem; }
-  .hamburger { display: block; }
-}
-.hamburger { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
-    .hamburger{
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
+
+    @media (max-width: 640px) {
+      .nav-links { display: none !important; }
+      .hamburger { display: flex; }
+      .mobile-drawer { display: flex; }
+
+      nav { padding: 1rem 1.25rem; }
+      nav.scrolled { padding: 0.75rem 1.25rem; }
+
+      section { padding: 3.5rem 1.25rem; }
+      .divider { margin: 0 1.25rem; }
+
+      #home {
+        padding: 6rem 1.25rem 3rem;
+        min-height: 100svh;
+      }
+      .hero-title {
+        font-size: clamp(2rem, 10vw, 3.5rem);
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .hero-btns {
+        flex-direction: column;
+        width: 100%;
+      }
+      .btn-primary,
+      .btn-outline {
+        text-align: center;
+        width: 100%;
+      }
+
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .about-avatar { max-width: 220px; }
+
+      .projects-grid { grid-template-columns: 1fr; }
+
+      .contact-item { padding: 0.85rem 1rem; }
+      .contact-value { font-size: 0.85rem; word-break: break-all; }
+
+      footer { padding: 1.5rem 1.25rem; }
     }
   </style>
- 
 </head>
 <body>
 
-  <nav>
+  <nav id="navbar">
     <div class="nav-logo">smey<span>.</span></div>
+
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <button class="hamburger" onclick="toggleMenu()">☰</button>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
+
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <a href="#home"     class="drawer-link">Home</a>
+    <a href="#about"    class="drawer-link">About</a>
+    <a href="#projects" class="drawer-link">Projects</a>
+    <a href="#contact"  class="drawer-link">Contact</a>
+  </div>
 
   <section id="home">
     <div class="hero-blob"></div>
@@ -431,7 +569,7 @@
       </p>
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">View My Work</a>
-        <a href="#contact" class="btn-outline">Get In Touch</a>
+        <a href="#contact"  class="btn-outline">Get In Touch</a>
       </div>
     </div>
   </section>
@@ -441,7 +579,7 @@
   <section id="about">
     <div class="about-grid">
       <div class="about-avatar">
-        <img src="smey.jpg" alt="">
+        <img src="smey.jpg" alt="Theng Ratanakraksmey">
       </div>
       <div class="about-text reveal">
         <p class="section-label">About Me</p>
@@ -453,7 +591,7 @@
           <span class="skill-tag">CSS</span>
           <span class="skill-tag">JavaScript</span>
           <span class="skill-tag">C# WinForms</span>
-          <span class="skill-tag">ASP.NET Core</span>
+          <span class="skill-tag">Flask</span>
           <span class="skill-tag">MySQL</span>
           <span class="skill-tag">Bootstrap</span>
           <span class="skill-tag">Python</span>
@@ -464,7 +602,6 @@
 
   <hr class="divider">
 
-  
   <section id="projects">
     <p class="section-label reveal">Projects</p>
     <h2 class="section-title reveal">Things I've Built</h2>
@@ -472,48 +609,47 @@
 
     <div class="projects-grid">
       <div class="project-card reveal">
-        <div class="project-thumb thumb-Stock"><img src="stocks.png" alt="">
+        <div class="project-thumb thumb-Stock">
+          <img src="stocks.png" alt="Stock Management">
         </div>
         <div class="project-body">
           <h3 class="project-name">Stock Management</h3>
-          <p class="project-desc">A Stock application easy to using, user-friendly interface.</p>
+          <p class="project-desc">A stock application easy to use with a user-friendly interface.</p>
           <div class="project-tags">
             <span class="project-tag">C# WinForms</span>
-            <span class="project-tag">ASP .NET Core</span>
-            <span class="project-tag">Server SQL Mangement</span>
-            <!-- <span class="project-tag">API</span> -->
+            <span class="project-tag">ASP.NET Core</span>
+            <span class="project-tag">SQL Server</span>
           </div>
         </div>
       </div>
 
-
       <div class="project-card reveal">
         <div class="project-thumb thumb-lib">
-          <img src="User.png" alt="">
+          <img src="User.png" alt="User Management System">
         </div>
         <div class="project-body">
           <h3 class="project-name">User Management System</h3>
           <p class="project-desc">A desktop application for managing members, built with C# WinForms and MySQL.</p>
           <div class="project-tags">
             <span class="project-tag">C# WinForms</span>
-            <span class="project-tag">Server SQL Management</span>
-            <span class="project-tag">ASP .NET Core</span>
+            <span class="project-tag">SQL Server</span>
+            <span class="project-tag">ASP.NET Core</span>
           </div>
         </div>
       </div>
 
       <div class="project-card reveal">
         <div class="project-thumb thumb-emp">
-          <img src="emp.png" alt="">
+          <img src="emp.png" alt="Employee Management System">
         </div>
         <div class="project-body">
           <h3 class="project-name">Employee Management System</h3>
-          <p class="project-desc">A full-featured employee management interface with a clear sidebar menu for naviagtion and a main area for entering and viewing data</p>
+          <p class="project-desc">A full-featured employee management interface with a clear sidebar menu for navigation and a main area for entering and viewing data.</p>
           <div class="project-tags">
-            <span class="project-tag">HTMl</span>
+            <span class="project-tag">HTML</span>
             <span class="project-tag">CSS</span>
-            <span class="project-tag">Python using Flask ask a Framework</span>
-            <span class="project-tag">Javascript</span>
+            <span class="project-tag">Python / Flask</span>
+            <span class="project-tag">JavaScript</span>
             <span class="project-tag">MySQL</span>
           </div>
         </div>
@@ -530,102 +666,96 @@
       <p class="section-sub">Have a project in mind or just want to say hi? Feel free to reach out!</p>
 
       <div class="contact-links">
-        <div class="contact-item">
-          <div class="contact-icon">
-            <i class="fa-solid fa-at"></i>
-          </div>
+        <a class="contact-item" href="https://smeytheng168@gmail.com">
+          <div class="contact-icon"><i class="fa-solid fa-at"></i></div>
           <div>
             <div class="contact-label">Email</div>
-              <div class="contact-value">
-                <a href="mailto:smeytheng168@gmail.com" 
-                  style="color:inherit; text-decoration:none;">
-                        smeytheng168@gmail.com
-                </a>
-                </div>
+            <div class="contact-value">smeytheng168@gmail.com</div>
           </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">
-            <i class="fa-brands fa-square-github"></i>
-          </div>
-          
+        </a>
+
+        <a class="contact-item" href="https://github.com/ratanakraksmey" target="_blank" rel="noopener">
+          <div class="contact-icon"><i class="fa-brands fa-github"></i></div>
           <div>
             <div class="contact-label">GitHub</div>
-              <div class="contact-value">
-               <a href="https://github.com/ratanakraksmey" target="_blank" style="color:inherit; text-decoration:none;">
-                github.com/ratanakraksmey
-                </a>
-              </div>
+            <div class="contact-value">github.com/ratanakraksmey</div>
           </div>
-        </div>
-        <div class="contact-item">
+        </a>
+
+        <a class="contact-item" href="https://linkedin.com/in/ThengRatanakraksmey" target="_blank" rel="noopener">
           <div class="contact-icon"><i class="fa-brands fa-linkedin-in"></i></div>
           <div>
             <div class="contact-label">LinkedIn</div>
-              <div class="contact-value">
-                <a href="https://linkedin.com/in/smeytheng168@gmail.com" target="_blank" style="color:inherit; text-decoration:none;">
-                linkedin.com/in/ThengRatanakraksmey
-                </a>
-              </div>
+            <div class="contact-value">linkedin.com/in/ThengRatanakraksmey</div>
           </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">
-            <i class="fa-brands fa-telegram"></i>
-          </div>
-          
+        </a>
+
+        <a class="contact-item" href="https://t.me/Raksmey_thengratanak" target="_blank" rel="noopener">
+          <div class="contact-icon"><i class="fa-brands fa-telegram"></i></div>
           <div>
             <div class="contact-label">Telegram</div>
-              <div class="contact-value">
-               <a href="https://t.me/Raksmey_thengratanak" target="_blank" style="color:inherit; text-decoration:none;">
-                Telegram.com/Theng_Ratanakraksmey
-                </a>
-              </div>
+            <div class="contact-value">@Raksmey_thengratanak</div>
           </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon"><i class="fa-solid fa-file"></i></div>
+        </a>
+
+        <a class="contact-item" href="CV_Theng Ratanakraksmey.pdf" target="_blank">
+          <div class="contact-icon"><i class="fa-solid fa-file-pdf"></i></div>
           <div>
             <div class="contact-label">Download my CV</div>
-              <div class="contact-value">
-                <a href="CV_Theng Ratanakraksmey.pdf" target="_blank" style="color:inherit; text-decoration:none;">
-                ThengRatanakraksmey_CV
-                </a>
-              </div>
+            <div class="contact-value">ThengRatanakraksmey_CV.pdf</div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </section>
 
   <footer>
-    <p>Designed & Built by <span>Smey</span> · 2025</p>
+    <p>Designed &amp; Built by <span>Smey</span> · 2026</p>
   </footer>
 
   <script>
-   
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
 
-
-    const nav = document.querySelector('nav');
+    const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
     });
-    function toggleMenu() {
-    document.querySelector('.nav-links').classList.toggle('open');
-}
+
+    const hamburger = document.getElementById('hamburger');
+    const drawer    = document.getElementById('mobileDrawer');
+
+    function openMenu() {
+      hamburger.classList.add('open');
+      drawer.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      drawer.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      drawer.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    document.querySelectorAll('.drawer-link').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMenu();
+    });
   </script>
 
 </body>
